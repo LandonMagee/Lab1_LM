@@ -13,7 +13,6 @@ r["CRAN"] <- "https://ftp.osuosl.org/pub/cran/"
 options(repos = r)
 ```
 
-
 # Lab Objectives
 •	Introduce students to R through and R studio, a Graphic User Interface (GUI) 
 •	REVIEW basic principle of data management, data exploration and visualization, and basic statistical tests including t-tests, linear models, and regression. 
@@ -123,7 +122,7 @@ t.test(Slope~factorUSE, alternative='two.sided', conf.level=.95,
 ```
 
 ## Cougar statistical analyses - linear models
-First, letes create a data set of only the used locations
+First, lets create a data set of only the used locations
 ```{r, cougar6}
 USEonly <- subset(cougar, subset=UseNonUse == 1)
 # Construct linear models of track counts as a function of 4 covariates
@@ -295,7 +294,7 @@ class(elc_habitat_sf)
 
 
 # look at structure of SpatVector
-#str(elc_habitat)
+str(elc_habitat_terra)
 
 # look at first 20 rows of data for SpatVector
 head(elc_habitat_terra, n=20)
@@ -340,6 +339,7 @@ st_transform(elc_habitat_sf, "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +
 #elc_habitat <-  spTransform(elc_habitat, CRS("+proj=utm +zone=11 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"))
 
 #write SpatVector to files
+# output is a file name; need to have it or similar named file to save
 writeVector(elc_habitat_terra, here::here("Output","elc_habitat_NEW_terra"), filetype = "ESRI Shapefile",insert = FALSE, overwrite = TRUE)
 
 #write sf object to files
@@ -355,6 +355,7 @@ Spatial data objects have a spatial extent, in geographic space, that they occup
 ext(elc_habitat_terra)
 ext(wolfyht_terra)
 
+# different way to look at above
 st_bbox(elc_habitat_sf)
 st_bbox(wolfyht_sf)
 ```
@@ -433,7 +434,7 @@ class(all.rasters)
 We can also sometimes need to export raster files to other formats such as a GeoTiff. 
 
 ```{r, obj7}
-writeRaster(deer_w, "Output/new_deer.tiff", filetype = "GTiff", overwrite=TRUE)
+terra::writeRaster(deer_w, "Output/new_deer.tiff", filetype = "GTiff", overwrite=TRUE)
 ```
 
 
@@ -466,7 +467,7 @@ mapView(wolfyht_terra, zcol="NAME", legend = TRUE, cex=5, lwd=2, map.type = "Ope
 mapView(wolfyht, zcol="NAME", legend = TRUE, cex=5, lwd=2, map.type = "Esri.WorldTopoMap") + mcp2_terra
 ```
 
-
+spits out all the R code
 ```{r eval=FALSE, include=FALSE}
 knitr::purl(input = "README.Rmd", output = "lab1.R", documentation = 1)
 
